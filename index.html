@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ing. Ayerton Yavi Tapia — Ingeniería Civil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ 1. TOKENS (paleta, tipografía) ============ */
+  :root{
+    --blueprint-navy:#0b2e4f;
+    --blueprint-navy-2:#0f3a63;
+    --paper:#eef1f4;
+    --paper-2:#ffffff;
+    --steel:#48565f;
+    --ink:#101820;
+    --line-cyan:#4fa8c9;
+    --safety-orange:#e8590c;
+    --border:#c7d0d6;
+    --radius:2px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+  }
+  h1,h2,h3{font-family:var(--font-display); margin:0 0 .4em; line-height:1.1;}
+  p{margin:0 0 1em;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  :focus-visible{outline:3px solid var(--safety-orange); outline-offset:2px;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.78rem;
+    color:var(--line-cyan);
+    margin-bottom:.9em;
+  }
+
+  .section{padding:6rem 1.5rem; max-width:1120px; margin:0 auto;}
+  .section.alt{background:var(--paper-2);}
+  .section.alt{max-width:none;}
+  .section.alt > *{max-width:1120px; margin-left:auto; margin-right:auto;}
+  .section h2{font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:1.4rem;}
+
+  /* ============ 2. HEADER / NAV ============ */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--blueprint-navy);
+    color:#fff;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.9rem 1.5rem;
+  }
+  .brand{
+    display:flex; align-items:center; gap:.6rem;
+    font-family:var(--font-mono); font-size:.95rem; letter-spacing:.06em;
+  }
+  .brand-mark{
+    width:34px; height:34px; border:2px solid var(--line-cyan); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:.9rem;
+  }
+  nav.main-nav{display:flex; gap:1.6rem;}
+  nav.main-nav a{
+    font-family:var(--font-mono); font-size:.8rem; text-transform:uppercase; letter-spacing:.08em;
+    text-decoration:none; color:#dce7ee; padding:.3rem 0; border-bottom:2px solid transparent;
+  }
+  nav.main-nav a:hover{border-color:var(--safety-orange); color:#fff;}
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line-cyan); color:#fff;
+    padding:.4rem .6rem; font-size:1rem; cursor:pointer;
+  }
+
+  @media (max-width:800px){
+    nav.main-nav{
+      position:absolute; top:100%; left:0; right:0; background:var(--blueprint-navy-2);
+      flex-direction:column; padding:1rem 1.5rem; gap:0; display:none;
+    }
+    nav.main-nav.open{display:flex;}
+    nav.main-nav a{padding:.7rem 0; border-bottom:1px solid rgba(255,255,255,.1);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ============ 3. HERO + CUADRO DE ROTULACIÓN (elemento firma) ============ */
+  .hero{
+    position:relative; overflow:hidden;
+    background:var(--blueprint-navy); color:#fff;
+    padding:5.5rem 1.5rem 3.5rem;
+  }
+  .blueprint-grid{
+    position:absolute; inset:0; opacity:.35; pointer-events:none;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(79,168,201,.35) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(79,168,201,.35) 0 1px, transparent 1px 40px);
+  }
+  .hero-content{position:relative; max-width:1120px; margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.2rem,6vw,3.6rem); max-width:16ch;}
+  .hero-sub{max-width:52ch; color:#cddbe4; font-size:1.05rem;}
+  .cta-group{display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.4rem;}
+  .btn-primary, .btn-ghost{
+    font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.05em;
+    padding:.8rem 1.4rem; text-decoration:none; border-radius:var(--radius);
+  }
+  .btn-primary{background:var(--safety-orange); color:#fff;}
+  .btn-ghost{border:1px solid var(--line-cyan); color:#fff;}
+
+  .title-block{
+    position:relative; margin:3rem auto 0; max-width:1120px;
+    background:var(--paper-2); color:var(--ink);
+    border:2px solid var(--ink);
+    font-family:var(--font-mono);
+  }
+  .tb-row.tb-header{
+    background:var(--ink); color:#fff; padding:.5rem 1rem;
+    font-size:.75rem; letter-spacing:.12em; text-transform:uppercase;
+  }
+  .tb-grid{
+    display:grid; grid-template-columns:repeat(6,1fr);
+  }
+  .tb-grid > div{
+    border-right:1px solid var(--border); border-top:1px solid var(--border);
+    padding:.6rem .8rem;
+  }
+  .tb-grid > div:last-child{border-right:none;}
+  .tb-label{display:block; font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; color:var(--steel);}
+  .tb-value{display:block; font-size:.85rem; font-weight:500;}
+  @media (max-width:700px){
+    .tb-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ============ 4. PERFIL ============ */
+  .perfil-grid{
+    display:grid; grid-template-columns:220px 1fr; gap:2.5rem; align-items:start;
+  }
+  .perfil-photo{
+    aspect-ratio:3/4; background:var(--paper-2); border:2px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.75rem; color:var(--steel); text-align:center; padding:1rem;
+  }
+  .dimension-divider{
+    margin-top:2rem; display:flex; align-items:center; gap:.6rem;
+    font-family:var(--font-mono); font-size:.8rem; color:var(--steel);
+  }
+  .dimension-divider::before, .dimension-divider::after{
+    content:""; flex:1; height:1px; background:var(--border);
+  }
+  @media (max-width:700px){
+    .perfil-grid{grid-template-columns:1fr;}
+    .perfil-photo{max-width:180px;}
+  }
+
+  /* ============ 5. SERVICIOS (spec-cards) ============ */
+  .cards-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.2rem;
+  }
+  .spec-card{
+    background:var(--paper); border:1px solid var(--border); padding:1.4rem;
+    position:relative;
+  }
+  .item-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.05em; color:var(--steel); border:1px solid var(--border);
+    padding:.15rem .5rem; margin-bottom:.9rem;
+  }
+  .spec-card .icon{width:34px; height:34px; margin-bottom:.8rem; color:var(--safety-orange);}
+  .spec-card h3{font-size:1.05rem;}
+  .spec-card p{font-size:.92rem; color:var(--steel); margin-bottom:0;}
+
+  /* ============ 6. PROYECTOS ============ */
+  .projects-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.6rem;
+  }
+  .project-card{background:var(--paper-2); border:1px solid var(--border);}
+  .project-media{
+    aspect-ratio:16/10; background:
+      repeating-linear-gradient(135deg, var(--paper) 0 10px, var(--paper-2) 10px 20px);
+    border-bottom:1px solid var(--border);
+  }
+  .project-body{padding:1.2rem 1.3rem 1.4rem;}
+  .project-meta{
+    display:flex; gap:1rem; font-family:var(--font-mono); font-size:.72rem;
+    color:var(--steel); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.5rem;
+  }
+  .project-body h3{font-size:1.05rem;}
+  .project-body p{font-size:.9rem; color:var(--steel); margin-bottom:0;}
+
+  /* ============ 7. TRAYECTORIA (timeline) ============ */
+  .timeline{list-style:none; margin:0; padding:0; border-left:2px solid var(--line-cyan);}
+  .timeline li{position:relative; padding:0 0 2.2rem 1.6rem; display:flex; gap:1.2rem;}
+  .timeline li:last-child{padding-bottom:0;}
+  .timeline li::before{
+    content:""; position:absolute; left:-6px; top:.3rem; width:10px; height:10px;
+    background:var(--safety-orange); border-radius:50%;
+  }
+  .tl-num{font-family:var(--font-mono); font-size:.8rem; color:var(--steel); flex-shrink:0; padding-top:.1rem;}
+  .timeline h3{font-size:1rem; margin-bottom:.2rem;}
+  .timeline p{font-size:.9rem; color:var(--steel); margin-bottom:0;}
+
+  /* ============ 8. CONTACTO ============ */
+  .contact-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:2.5rem;}
+  form{display:flex; flex-direction:column; gap:1rem;}
+  label{font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--steel); margin-bottom:.3rem; display:block;}
+  input, textarea{
+    width:100%; padding:.7rem .8rem; border:1px solid var(--border); background:var(--paper-2);
+    font-family:var(--font-body); font-size:.92rem; border-radius:var(--radius);
+  }
+  textarea{min-height:120px; resize:vertical;}
+  button.submit{
+    align-self:flex-start; background:var(--ink); color:#fff; border:none;
+    font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.06em; font-size:.82rem;
+    padding:.8rem 1.6rem; cursor:pointer; border-radius:var(--radius);
+  }
+  button.submit:hover{background:var(--safety-orange);}
+  .contact-info{font-family:var(--font-mono); font-size:.88rem; color:var(--steel);}
+  .contact-info div{margin-bottom:1rem;}
+  .contact-info span{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--line-cyan); margin-bottom:.15rem;}
+  .form-msg{font-family:var(--font-mono); font-size:.82rem; color:var(--safety-orange); min-height:1.2em;}
+  @media (max-width:700px){ .contact-grid{grid-template-columns:1fr;} }
+
+  /* ============ 9. FOOTER ============ */
+  footer{
+    background:var(--blueprint-navy); color:#9fb4c2; text-align:center;
+    padding:1.6rem 1.5rem; font-family:var(--font-mono); font-size:.75rem; letter-spacing:.03em;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">IC</span>
+      <span>Ing. Ayerton Yavi Tapia</span>
+    </div>
+    <nav class="main-nav" id="mainNav">
+      <a href="#perfil">Perfil</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#experiencia">Trayectoria</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="blueprint-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Ingeniería Civil · Diseño, Cálculo estructural y Supervisión de Obras</p>
+      <h1>Ing. Ayerton Yavi Tapia</h1>
+      <p class="hero-sub">Ingeniero civil con experiencia en diseño estructural, presupuestos y supervisión de obras civiles, de saneamiento y de infraestructura vial. Trabajo con precisión técnica de principio a fin.</p>
+      <div class="cta-group">
+        <a class="btn-primary" href="#contacto">Solicitar cotización</a>
+        <a class="btn-ghost" href="#proyectos">Ver proyectos</a>
+      </div>
+    </div>
+
+    <!-- Elemento firma: cuadro de rotulación, como en un plano técnico -->
+    <div class="title-block">
+      <div class="tb-row tb-header"><span>Cuadro de Rotulación</span></div>
+      <div class="tb-grid">
+        <div><span class="tb-label">Nombre</span><span class="tb-value">Ing. Ayerton Yavi Tapia</span></div>
+        <div><span class="tb-label">Profesión</span><span class="tb-value">Ing. Civil</span></div>
+        <div><span class="tb-label">Registro</span><span class="tb-value">RNI N.º 41.215</span></div>
+        <div><span class="tb-label">Escala</span><span class="tb-value">S/E</span></div>
+        <div><span class="tb-label">Fecha</span><span class="tb-value" id="fechaHoy">--/--/----</span></div>
+        <div><span class="tb-label">Hoja</span><span class="tb-value">1 / 1</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PERFIL ============ -->
+  <section class="section" id="perfil">
+    <p class="eyebrow" style="color:var(--steel)">Sobre mí</p>
+    <h2>Perfil Profesional</h2>
+    <div class="perfil-grid">
+      <div class="perfil-photo">Foto de perfil<br>(reemplazar)</div>
+      <div>
+        <p>Soy ingeniero civil egresado de la Universidad Mayor de San Simón, con experiencia en el diseño, cálculo estructural y supervisión de obras civiles, de saneamiento e infraestructura vial y urbana. He participado en proyectos de dotación de agua potable, muros de contención, pavimentos y equipamiento urbano, trabajando de la mano con supervisores de obra y entidades municipales.</p>
+        <p>Mi enfoque combina el rigor técnico de las especificaciones y normas vigentes (AASHTO, CBH, ACI) con una gestión de obra ordenada: presupuestos claros, cronogramas realistas y comunicación directa con el cliente en cada etapa.</p>
+        <div class="dimension-divider"><span>+8 años de experiencia en obra</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="section alt" id="servicios">
+    <p class="eyebrow" style="color:var(--steel)">Qué ofrezco</p>
+    <h2>Servicios</h2>
+    <div class="cards-grid">
+      <article class="spec-card">
+        <span class="item-tag">ÍTEM N.º 1</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        <h3>Diseño Estructural</h3>
+        <p>Cálculo y planos de estructuras de hormigón armado, mampostería y acero conforme a normativa vigente.</p>
+      </article>
+      <article class="spec-card">
+        <span class="item-tag">ÍTEM N.º 2</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M6 19V9l4-3 4 3v10M14 19v-5h4v5"/><circle cx="9" cy="7" r="1"/></svg>
+        <h3>Supervisión de Obra</h3>
+        <p>Control de avance, calidad y cumplimiento de especificaciones técnicas durante la ejecución del proyecto.</p>
+      </article>
+      <article class="spec-card">
+        <span class="item-tag">ÍTEM N.º 3</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <h3>Presupuestos y Propuestas</h3>
+        <p>Elaboración de cómputos métricos, análisis de precios unitarios y planillas de presupuesto para licitaciones.</p>
+      </article>
+      <article class="spec-card">
+        <span class="item-tag">ÍTEM N.º 4</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l3 3-9 9-3 1 1-3 8-8z"/><path d="M14 5l3 3"/></svg>
+        <h3>Consultoría Técnica</h3>
+        <p>Asesoramiento en la etapa de diseño, factibilidad y revisión de proyectos de infraestructura.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PROYECTOS ============ -->
+  <section class="section" id="proyectos">
+    <p class="eyebrow" style="color:var(--steel)">Trabajo realizado</p>
+    <h2>Proyectos</h2>
+    <div class="projects-grid">
+      <article class="project-card">
+        <div class="project-media" aria-hidden="true"></div>
+        <div class="project-body">
+          <div class="project-meta"><span>2024</span><span>Cochabamba</span></div>
+          <h3>Cancha Polifuncional OTB</h3>
+          <p>Diseño y presupuesto de muros de contención, piso de cemento y equipamiento deportivo con iluminación LED.</p>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-media" aria-hidden="true"></div>
+        <div class="project-body">
+          <div class="project-meta"><span>2023</span><span>Tiquipaya</span></div>
+          <h3>Pavimentación con Adoquín PAVIC</h3>
+          <p>Supervisión de replanteo, base granular y colocado de adoquín cerámico de alto tráfico.</p>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-media" aria-hidden="true"></div>
+        <div class="project-body">
+          <div class="project-meta"><span>2022</span><span>Sacaba</span></div>
+          <h3>Alumbrado Público Tipo Farola</h3>
+          <p>Provisión e instalación de postes metálicos, luminarias LED y ducteado eléctrico subterráneo.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TRAYECTORIA ============ -->
+  <section class="section alt" id="experiencia">
+    <p class="eyebrow" style="color:var(--steel)">Recorrido</p>
+    <h2>Trayectoria</h2>
+    <ol class="timeline">
+      <li><span class="tl-num">2024</span><div><h3>Ingeniero Residente — Empresa Constructora</h3><p>Supervisión de obras civiles y de infraestructura urbana en Cochabamba.</p></div></li>
+      <li><span class="tl-num">2021</span><div><h3>Ingeniero de Presupuestos</h3><p>Elaboración de propuestas técnicas y económicas para licitaciones públicas.</p></div></li>
+      <li><span class="tl-num">2019</span><div><h3>Ayudante de Obra</h3><p>Apoyo en replanteo, control de calidad y coordinación de cuadrillas de trabajo.</p></div></li>
+      <li><span class="tl-num">2017</span><div><h3>Egresado — Ingeniería Civil</h3><p>Universidad [Nombre], Cochabamba, Bolivia.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="section" id="contacto">
+    <p class="eyebrow" style="color:var(--steel)">Hablemos</p>
+    <h2>Contacto</h2>
+    <div class="contact-grid">
+      <form id="contactForm">
+        <div>
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div>
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" required></textarea>
+        </div>
+        <button class="submit" type="submit">Enviar mensaje</button>
+        <p class="form-msg" id="formMsg"></p>
+      </form>
+      <div class="contact-info">
+        <div><span>Correo</span>yavitapia@gmail.com</div>
+        <div><span>Teléfono</span>+591 72762515</div>
+        <div><span>Ubicación</span>Cochabamba, Bolivia</div>
+        <div><span>Colegio de Ingenieros</span>CIC N.º 41.215</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    © <span id="anioActual"></span> Ing. Ayerton Yavi Tapia — Ingeniería Civil. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Menú móvil
+    const navToggle = document.getElementById('navToggle');
+    const mainNav = document.getElementById('mainNav');
+    navToggle.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mainNav.classList.remove('open'));
+    });
+
+    // Fecha en el cuadro de rotulación y año en el footer
+    const hoy = new Date();
+    document.getElementById('fechaHoy').textContent =
+      String(hoy.getDate()).padStart(2, '0') + '/' +
+      String(hoy.getMonth() + 1).padStart(2, '0') + '/' +
+      hoy.getFullYear();
+    document.getElementById('anioActual').textContent = hoy.getFullYear();
+
+    // Formulario de contacto (demo: sin backend, solo confirmación visual)
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.textContent = 'Mensaje listo para enviar. Conectá este formulario a tu correo o servicio de envío preferido.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
